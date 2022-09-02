@@ -1,1 +1,0 @@
-const nodemon = require("nodemon");
