@@ -61,7 +61,7 @@ const authServices = {
   },
 
   generateAuthData: (userData) => {
-    const user = { id: userData._id };
+    const user = { id: userData.data.id };
     return {
       token: authServices.generateToken(user),
     };
