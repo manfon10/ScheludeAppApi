@@ -60,6 +60,40 @@ const authServices = {
     };
   },
 
+  protectToken: async (req) => {
+    let token;
+
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    }
+
+    if (!token) {
+      return {
+        success: false,
+        message: "Session invalid",
+      };
+    }
+
+    const decoded = await authServices.decodedToken(token);
+
+    const user = await usersServices.getOneById(decoded.id);
+
+    if (!user) {
+      return {
+        success: false,
+        message: "he owner of this token is no longer available",
+      };
+    }
+
+    return {
+      success: true,
+      user,
+    };
+  },
+
   generateAuthData: (userData) => {
     const user = { id: userData.data.id };
     return {
@@ -79,6 +113,10 @@ const authServices = {
     return jwt.sign(data, jwtSecret, {
       expiresIn: jwtExpires,
     });
+  },
+
+  decodedToken: (token) => {
+    return jwt.verify(token, jwtSecret);
   },
 };
 
