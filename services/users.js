@@ -19,6 +19,15 @@ const usersServices = {
       data: user,
     };
   },
+
+  getOneById: async (id) => {
+    const user = await User.findOne({ id });
+
+    return {
+      succes: user ? true : false,
+      data: user,
+    };
+  },
 };
 
 module.exports = usersServices;
