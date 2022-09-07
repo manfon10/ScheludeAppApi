@@ -21,13 +21,13 @@ const usersServices = {
   },
 
   getOneById: async (id) => {
-    const user = await User.findById(id);
+    const user = await User.findOne({ id });
 
     return {
-      success: user ? true : false,
+      succes: user ? true : false,
       data: user,
-    }
-  }
+    };
+  },
 };
 
 module.exports = usersServices;
