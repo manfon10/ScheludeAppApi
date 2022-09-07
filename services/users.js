@@ -12,13 +12,22 @@ const usersServices = {
   },
 
   getOneByEmail: async (email) => {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate("teams");
 
     return {
       succes: user ? true : false,
       data: user,
     };
   },
+
+  getOneById: async (id) => {
+    const user = await User.findById(id);
+
+    return {
+      success: user ? true : false,
+      data: user,
+    }
+  }
 };
 
 module.exports = usersServices;
