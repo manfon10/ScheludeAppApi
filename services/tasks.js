@@ -12,7 +12,12 @@ const tasksServices = {
   },
 
   getAllTasks: async () => {
-    const tasks = await Task.find().populate("user").exec();
+    const tasks = await Task.find({}, "-__v")
+      .populate({
+        path: "user",
+        select: ["-password", "-__v"],
+      })
+      .exec();
 
     return {
       success: true,
