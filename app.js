@@ -7,6 +7,7 @@ const cors = require("cors");
 // Routes
 const { authRouter } = require("./routes/auth");
 const { taskRouter } = require("./routes/tasks");
+const { teamsRouter } = require("./routes/teams");
 
 // Init express app
 const app = express();
@@ -20,5 +21,6 @@ app.use(express.json());
 //Endpoints
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/task", taskRouter);
+app.use("/api/v1/teams", teamsRouter);
 
 module.exports = { app };
