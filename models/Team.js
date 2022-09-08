@@ -1,6 +1,6 @@
 const { mongoose } = require("../config/database");
 
-const teamSchema = mongoose.Schema({
+const teamSchema = new mongoose.Schema({
   name: {
     type: String,
     require: true,
