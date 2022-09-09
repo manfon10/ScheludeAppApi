@@ -21,13 +21,15 @@ const usersServices = {
   },
 
   getOneById: async (id) => {
-    const user = await User.findOne({ id });
+    const user = await User.findById(id);
 
     return {
       succes: user ? true : false,
       data: user,
     };
   },
+
+  deleteTask: async (taskId) => {},
 };
 
 module.exports = usersServices;
