@@ -12,7 +12,7 @@ const usersServices = {
   },
 
   getOneByEmail: async (email) => {
-    const user = await User.findOne({ email }).populate("teams");
+    const user = await User.findOne({ email });
 
     return {
       succes: user ? true : false,

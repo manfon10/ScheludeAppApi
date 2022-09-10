@@ -1,5 +1,6 @@
 const Team = require("../models/Team");
 const usersServices = require("./users");
+const tasksServices = require("./tasks");
 
 const teamsServices = {
   getAll: async (userId) => {
@@ -52,7 +53,7 @@ const teamsServices = {
   },
 
   deleteTeam: async (teamId) => {
-    const deletedTeam = await Team.findOneAndDelete(teamId);
+    const deletedTeam = await Team.findOneAndDelete({ _id: teamId });
 
     return {
       data: deletedTeam,
@@ -90,6 +91,46 @@ const teamsServices = {
       data: team,
       message: "User added to the team!",
       success: team ? true : false,
+    }
+  },
+
+  assignTaskToMember: async (teamId, taskData) => {
+    const task = await tasksServices.createTask(taskData);
+
+    const team = await Team.findOneAndUpdate(
+      { _id: teamId },
+      { $push: { tasks: task.data._id } },
+      { new: true }
+    );
+
+    return {
+      data: task,
+      message: "Task created!",
+      success: team ? true : false,
+    }
+  },
+
+  deleteTeamTask: async (teamId, taskId) => {
+    const task = await tasksServices.deleteTask(taskId);
+
+    if (task.success) {
+      const team = await Team.findOneAndUpdate(
+        { _id: teamId },
+        { $pull: { tasks: taskId } },
+        { new: true }
+      );
+
+      if ( team) {
+        return {
+          message: "Task deleted!",
+          success: true,
+        }
+      }
+    }
+
+    return {
+      message: "Error!",
+      success: false,
     }
   },
 };
