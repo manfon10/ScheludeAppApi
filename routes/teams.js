@@ -13,6 +13,8 @@ const {
   deleteTeam,
   addMember,
   removeMember,
+  assignTaskToMember,
+  deleteTeamTask,
 } = teamsServices;
 const { protectToken } = authServices;
 
@@ -94,6 +96,29 @@ router.delete(
     const { email } = req.body;
 
     const team = await removeMember(id, email);
+
+    return res.status(team.success ? 200 : 400).json(team);
+  })
+);
+
+router.post(
+  "/assign-task/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+
+    const task = await assignTaskToMember(id, req.body);
+
+    return res.status(task.success ? 200 : 400).json(task);
+  })
+);
+
+router.delete(
+  "/delete-task/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const { taskId } = req.body;
+
+    const team = await deleteTeamTask(id, taskId);
 
     return res.status(team.success ? 200 : 400).json(team);
   })

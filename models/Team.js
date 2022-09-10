@@ -8,6 +8,10 @@ const teamSchema = new mongoose.Schema({
   users: [{
     ref: "User",
     type: mongoose.Schema.Types.ObjectId
+  }],
+  tasks: [{
+    ref: "Task",
+    type: mongoose.Schema.Types.ObjectId
   }]
 });
 

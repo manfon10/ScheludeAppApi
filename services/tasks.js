@@ -65,10 +65,10 @@ const tasksServices = {
   },
 
   deleteTask: async (taskId) => {
-    await Task.findOneAndDelete(taskId);
+    const task = await Task.findOneAndDelete({ _id: taskId });
 
     return {
-      success: true,
+      success: task ? true : false,
       message: "Task eliminated!",
     };
   },
