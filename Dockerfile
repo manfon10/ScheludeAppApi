@@ -1,9 +1,10 @@
-FROM --platform=linux/amd64 node:18-alpice as deps
+
+FROM node:18-alpine as deps
 WORKDIR /app
 
 COPY package.json ./
 RUN npm install
 
-COPY ./src ./
+COPY ./ ./
 
 CMD [ "node", "index.js" ]
